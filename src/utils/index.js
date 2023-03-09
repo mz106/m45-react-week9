@@ -71,7 +71,8 @@ export const getAllUsers = async () => {
     });
 
     const data = await response.json();
-    console.log(data);
+    console.log("getallusers data: ", data);
+    return data.users;
   } catch (error) {
     console.log(error);
   }

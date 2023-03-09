@@ -12,6 +12,7 @@ function App() {
     email: null,
     token: null,
   });
+  const [users, setUsers] = useState();
 
   useEffect(() => {
     if (document.cookie) {
@@ -35,10 +36,10 @@ function App() {
     await setUser(persistantUser.user);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const cookieName = "jwt_token";
-    getAllUsers(cookieName);
+    setUsers(await getAllUsers(cookieName));
   };
 
   return (
@@ -58,6 +59,7 @@ function App() {
       <form onSubmit={(e) => submitHandler(e)}>
         <button type="submit">getAllUsers</button>
       </form>
+      <>{users ? users.map((user) => <p>{user.username}</p>) : null}</>
     </div>
   );
 }
