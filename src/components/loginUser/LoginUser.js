@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./LoginUser.css";
 
+import { loginUser } from "../../utils";
+
 const LoginUser = ({ user, setUser }) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -8,6 +10,7 @@ const LoginUser = ({ user, setUser }) => {
   const onLoginSubmit = async (e) => {
     e.preventDefault();
     console.log(username, password);
+    await loginUser(username, password, setUser);
   };
 
   return (
