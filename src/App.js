@@ -36,6 +36,19 @@ function App() {
     await setUser(persistantUser.user);
   };
 
+  const logout = (e) => {
+    e.preventDefault();
+    setUser({
+      username: null,
+      email: null,
+      token: null,
+    });
+    setUsers(null);
+    console.log(document.cookie);
+    document.cookie =
+      "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const cookieName = "jwt_token";
@@ -58,6 +71,7 @@ function App() {
       </>
       <form onSubmit={(e) => submitHandler(e)}>
         <button type="submit">getAllUsers</button>
+        <button onClick={(e) => logout(e)}>Log out</button>
       </form>
       <>{users ? users.map((user) => <p>{user.username}</p>) : null}</>
     </div>
