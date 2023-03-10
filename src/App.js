@@ -16,7 +16,7 @@ function App() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setUsers(await getAllUsers(user));
+    setUsers(await getAllUsers());
   };
 
   return (

@@ -1,3 +1,5 @@
+import { writeCookie, getTokenFromCookie } from "../common";
+
 export const addUser = async (username, email, password) => {
   try {
     const response = await fetch("http://localhost/users/register", {
@@ -35,22 +37,24 @@ export const loginUser = async (username, password, setUser) => {
     });
 
     const data = await response.json();
-    console.log(data);
 
     setUser(data.user);
+    writeCookie("jwt_token", data.user.token, 7);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getAllUsers = async (user) => {
+export const getAllUsers = async () => {
   try {
+    const token = getTokenFromCookie("jwt_token");
+
     const response = await fetch("http://localhost/users/getallusers", {
       method: "GET",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.token,
+        Authorization: `${token}`,
       },
     });
 
