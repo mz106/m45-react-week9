@@ -3,12 +3,21 @@ import { useState } from "react";
 import "./App.css";
 import UserWrapper from "./components/userWrapper/UserWrapper";
 
+import { getAllUsers } from "./utils";
+
 function App() {
   const [user, setUser] = useState({
     username: null,
     email: null,
     token: null,
   });
+
+  const [users, setUsers] = useState();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    setUsers(await getAllUsers(user));
+  };
 
   return (
     <div className="app-wrapper">
@@ -21,6 +30,14 @@ function App() {
           <p>Not logged in</p>
         )}
       </>
+
+      <form onSubmit={(e) => submitHandler(e)}>
+        <button type="submit">Get All Users</button>
+      </form>
+
+      {users
+        ? users.map((user, index) => <p key={user.id}>{user.username}</p>)
+        : null}
     </div>
   );
 }
