@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./App.css";
+import { getTokenFromCookie } from "./common";
 import UserWrapper from "./components/userWrapper/UserWrapper";
 
-import { getAllUsers } from "./utils";
+import { getAllUsers, authCheck } from "./utils";
 
 function App() {
   const [user, setUser] = useState({
@@ -13,6 +14,42 @@ function App() {
   });
 
   const [users, setUsers] = useState();
+
+  useEffect(() => {
+    if (document.cookie) {
+      let token = getTokenFromCookie("jwt_token");
+
+      if (token === false) {
+        setUser({
+          username: null,
+          email: null,
+          token: null,
+        });
+      } else {
+        loginWithToken(token);
+      }
+    }
+  }, []);
+
+  const logOut = (e) => {
+    e.preventDefault();
+    setUser({
+      username: null,
+      email: null,
+      token: null,
+    });
+
+    setUsers(null);
+
+    document.cookie =
+      "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  };
+
+  const loginWithToken = async (token) => {
+    const persistantUser = await authCheck(token);
+
+    await setUser(persistantUser.user);
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -33,6 +70,7 @@ function App() {
 
       <form onSubmit={(e) => submitHandler(e)}>
         <button type="submit">Get All Users</button>
+        <button onClick={(e) => logOut(e)}>Logout</button>
       </form>
 
       {users

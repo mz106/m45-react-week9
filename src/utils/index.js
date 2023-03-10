@@ -64,3 +64,24 @@ export const getAllUsers = async () => {
     console.log(error);
   }
 };
+
+export const authCheck = async (jwtToken) => {
+  try {
+    const response = await fetch("http://localhost/users/authcheck", {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${jwtToken}`,
+      },
+    });
+
+    const data = await response.json();
+
+    data.user.token = jwtToken;
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
