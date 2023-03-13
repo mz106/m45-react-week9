@@ -76,7 +76,7 @@ export const loginUser = async (username, password, setUser) => {
 export const getAllUsers = async () => {
   try {
     const token = getTokenFromCookie("jwt_token");
-
+    // getAllusers is a projected endpoint so we need to get the token from the cookie to pass into the Authorization header below
     const response = await fetch("http://localhost/users/getallusers", {
       method: "GET",
       mode: "cors",
@@ -110,8 +110,6 @@ export const authCheck = async (jwtToken) => {
     });
 
     const data = await response.json();
-    console.log("!!!!!!")
-    console.log(data)
     data.user.token = jwtToken;
     return data;
   } catch (error) {
