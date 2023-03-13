@@ -9,9 +9,10 @@ const AddUser = ({ user, setUser }) => {
   const [password, setPassword] = useState();
 
   const onRegisterSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();// prevent the page from reloading
     console.log(username, email, password);
-
+    // call addUser function from our utils folder
+    
     await addUser(username, email, password);
   };
 

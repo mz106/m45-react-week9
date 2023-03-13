@@ -13,11 +13,12 @@ function App() {
     token: null,
   });
   const [users, setUsers] = useState();
-
+  
+  // useEffect is run or rerun everytime the page is reloaded
   useEffect(() => {
+    // if the browser has a cookie for the website
     if (document.cookie) {
       let token = getTokenFromCookie("jwt_token");
-
       if (token === false) {
         setUser({
           username: null,
@@ -25,13 +26,17 @@ function App() {
           token: null,
         });
       } else {
+        // pass value of the token in and the setUser state hook defined on line 10
         loginInWithToken(token, setUser);
       }
     }
   }, []);
 
   const loginInWithToken = async (token) => {
+    // store return from authCheck function in variable
     const persistantUser = await authCheck(token);
+    console.log("ggggggg")
+    console.log(persistantUser)
 
     await setUser(persistantUser.user);
   };
@@ -58,8 +63,10 @@ function App() {
   return (
     <div className="app-wrapper">
       <h1>Awesome App!</h1>
+      {/* setUser is defined as a state hook above in line 15 */}
       <UserWrapper user={user} setUser={setUser} />
       <>
+        {/* once a user is logged in display there username in the p tag below */}
         <p>user is {user.username}</p>
       </>
       <>

@@ -3,13 +3,15 @@ import "./LoginUser.css";
 
 import { loginUser } from "../../utils";
 
-const LoginUser = ({ user, setUser }) => {
+const LoginUser = ({user, setUser}) => {
+  // state is passed from parent userWrapper.js
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
   const onLoginSubmit = async (e) => {
     e.preventDefault();
     console.log(username, password);
+    //setUser prop passed into loginUser
     await loginUser(username, password, setUser);
   };
 
