@@ -7,7 +7,7 @@ import { addUser } from "../../utils";
 // import addUser from utils
 
 const AddUser = ({ user, setUser }) => {
-  // Props are passed down from the parent userWrapper componet
+  // Props are passed down from the parent userWrapper component
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();

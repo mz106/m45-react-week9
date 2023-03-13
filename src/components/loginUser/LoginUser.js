@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./LoginUser.css";
 
 import { loginUser } from "../../utils";
+//The code here is near enough identical to the addUser componet apart from wording
 
 const LoginUser = ({user, setUser}) => {
   // state is passed from parent userWrapper.js
